@@ -1,0 +1,82 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
+  --accent: #e5334a; --text: #e8eaf0; --text-dim: #7b7f96;
+  --border: #2e3148; --radius: 14px; --shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+.header { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.header-inner { max-width: 700px; margin: 0 auto; padding: 14px 20px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+
+.main { max-width: 700px; margin: 0 auto; padding: 24px 16px 60px; display: flex; flex-direction: column; gap: 20px; }
+
+.preview-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #0a0b10; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.preview-wrapper.audio-only { aspect-ratio: unset; height: 120px; }
+#liveVideo { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+.preview-wrapper.audio-only #liveVideo { display: none; }
+
+.preview-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--text-dim); font-size: 0.9rem; background: #0a0b10; }
+.preview-overlay.hidden { display: none; }
+
+.recording-badge { position: absolute; top: 12px; left: 12px; background: var(--accent); color: white; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 20px; display: none; align-items: center; gap: 6px; }
+.recording-badge.visible { display: flex; }
+.rec-dot { width: 7px; height: 7px; background: white; border-radius: 50%; animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.timer { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.65); color: white; font-family: monospace; font-size: 0.85rem; padding: 4px 10px; border-radius: 8px; display: none; }
+.timer.visible { display: block; }
+
+.controls { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.ctrl-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius); padding: 14px 20px; cursor: pointer; font-size: 0.78rem; font-weight: 500; transition: background 0.18s, transform 0.1s; min-width: 80px; user-select: none; -webkit-tap-highlight-color: transparent; }
+.ctrl-btn:hover { background: var(--surface2); }
+.ctrl-btn:active { transform: scale(0.96); }
+.ctrl-btn.active { background: var(--surface2); border-color: #5b5ff0; color: #7c80ff; }
+.ctrl-btn:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+.record-btn svg { color: var(--accent); }
+.record-btn.recording { background: rgba(229,51,74,0.1); border-color: var(--accent); color: var(--accent); }
+
+.mode-selector { display: flex; gap: 8px; justify-content: center; }
+.mode-btn { display: flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 30px; color: var(--text-dim); font-size: 0.83rem; font-weight: 500; cursor: pointer; transition: all 0.18s; -webkit-tap-highlight-color: transparent; }
+.mode-btn.active { background: var(--surface2); border-color: #5b5ff0; color: #7c80ff; }
+
+.audio-meter-wrap { display: none; flex-direction: column; align-items: center; gap: 6px; }
+.audio-meter-wrap.visible { display: flex; }
+.audio-meter { width: 100%; max-width: 400px; height: 8px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+.audio-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #facc15, var(--accent)); border-radius: 10px; transition: width 0.08s linear; }
+.audio-label { font-size: 0.72rem; color: var(--text-dim); }
+
+.status { text-align: center; font-size: 0.85rem; color: var(--text-dim); }
+.status.error { color: var(--accent); }
+.status.ok { color: #22c55e; }
+
+.recordings h2 { font-size: 0.78rem; font-weight: 600; margin-bottom: 14px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+.recordings-list { display: flex; flex-direction: column; gap: 12px; }
+
+.recording-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.recording-item video, .recording-item audio { width: 100%; border-radius: 8px; background: #0a0b10; }
+.recording-item video { max-height: 240px; object-fit: contain; }
+
+.rec-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.rec-label { font-size: 0.82rem; font-weight: 600; }
+.rec-info { font-size: 0.75rem; color: var(--text-dim); }
+.rec-actions { display: flex; gap: 8px; }
+
+.btn-send { display: flex; align-items: center; gap: 6px; background: var(--accent); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: background 0.18s; }
+.btn-send:hover { background: #ff4d65; }
+.btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-dl { display: flex; align-items: center; gap: 6px; background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; font-size: 0.78rem; font-weight: 500; text-decoration: none; transition: all 0.18s; }
+.btn-dl:hover { border-color: #5b5ff0; color: #7c80ff; }
+
+.upload-status { font-size: 0.78rem; text-align: center; padding: 4px 0; display: none; }
+.upload-status.sending { display: block; color: var(--text-dim); }
+.upload-status.success { display: block; color: #22c55e; font-weight: 600; }
+.upload-status.error { display: block; color: var(--accent); }
+
+@media (max-width: 480px) {
+  .ctrl-btn { padding: 12px 14px; min-width: 70px; font-size: 0.72rem; }
+}
