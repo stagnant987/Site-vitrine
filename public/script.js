@@ -199,6 +199,12 @@ function saveRecording() {
           </svg>
           Garder
         </a>
+        <button class="btn-trash" title="Supprimer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+          </svg>
+        </button>
       </div>
     </div>
     <div class="upload-status" id="uploadStatus"></div>
@@ -231,6 +237,14 @@ function saveRecording() {
       btn.disabled = false;
       btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer`;
     }
+  });
+
+  // Bouton poubelle
+  item.querySelector('.btn-trash').addEventListener('click', () => {
+    URL.revokeObjectURL(url);
+    item.remove();
+    recordingsSec.style.display = 'none';
+    setStatus('Enregistrement supprimé.');
   });
 
   recordingsList.innerHTML = '';

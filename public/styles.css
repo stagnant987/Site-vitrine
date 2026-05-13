@@ -85,6 +85,18 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 .btn-dl { display: flex; align-items: center; gap: 6px; background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; font-size: 0.78rem; font-weight: 500; text-decoration: none; transition: all 0.18s; }
 .btn-dl:hover { border-color: #5b5ff0; color: #7c80ff; }
 
+.btn-trash {
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 8px;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-trash:hover { border-color: var(--accent); color: var(--accent); }
+
 .upload-status { font-size: 0.78rem; text-align: center; padding: 4px 0; display: none; }
 .upload-status.sending { display: block; color: var(--text-dim); }
 .upload-status.success { display: block; color: #22c55e; font-weight: 600; }
