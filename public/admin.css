@@ -57,6 +57,17 @@ html, body {
   box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
+.btn-back-login {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--text-mid);
+  text-decoration: none;
+  font-size: 0.82rem; font-weight: 500;
+  align-self: flex-start;
+  transition: color 0.18s;
+  margin-bottom: 8px;
+}
+.btn-back-login:hover { color: var(--text); }
+
 .login-icon {
   width: 72px; height: 72px;
   background: var(--blue-dim);
