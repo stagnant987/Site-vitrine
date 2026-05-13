@@ -303,7 +303,27 @@ btnRecord.addEventListener('click', () => { state.recording ? stopRecording() : 
 
 btnSwitch.addEventListener('click', async () => {
   state.facingMode = state.facingMode === 'user' ? 'environment' : 'user';
-  await startStream();
+  try {
+    // Demande uniquement une nouvelle piste vidéo, sans toucher au micro
+    const newStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: state.facingMode, width: { ideal: 1280 }, height: { ideal: 720 } }
+    });
+    const newVideoTrack = newStream.getVideoTracks()[0];
+
+    if (state.stream) {
+      // Arrête l'ancienne piste vidéo
+      state.stream.getVideoTracks().forEach(t => { state.stream.removeTrack(t); t.stop(); });
+      // Ajoute la nouvelle
+      state.stream.addTrack(newVideoTrack);
+    } else {
+      state.stream = newStream;
+    }
+
+    liveVideo.srcObject = null;
+    liveVideo.srcObject = state.stream;
+  } catch (err) {
+    handlePermissionError(err);
+  }
 });
 
 modeVideo.addEventListener('click', async () => {
