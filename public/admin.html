@@ -8,76 +8,164 @@
 </head>
 <body>
 
-  <!-- LOGIN -->
+  <!-- ══ ÉCRAN DE LOGIN ══════════════════════════════════════════ -->
   <div class="login-screen" id="loginScreen">
-    <div class="login-box">
-      <div class="login-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+    <div class="login-card">
+      <div class="login-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36">
           <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
         </svg>
-        Administration
       </div>
-      <p class="login-sub">Espace réservé à l'administrateur</p>
-      <form id="loginForm">
+      <h1>Espace Administrateur</h1>
+      <p class="login-sub">Connectez-vous pour accéder aux vidéos reçues</p>
+      <form id="loginForm" autocomplete="off">
         <div class="field">
-          <label>Mot de passe</label>
-          <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password" required />
+          <label for="passwordInput">Mot de passe</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" required />
         </div>
-        <button type="submit" class="btn-login">Se connecter</button>
+        <button type="submit" class="btn-login" id="btnLogin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          Se connecter
+        </button>
         <p class="login-error" id="loginError"></p>
       </form>
     </div>
   </div>
 
-  <!-- DASHBOARD -->
-  <div class="dashboard" id="dashboard" style="display:none">
+  <!-- ══ DASHBOARD ══════════════════════════════════════════════ -->
+  <div class="app" id="app" style="display:none">
 
-    <header class="dash-header">
-      <div class="dash-header-inner">
-        <div class="dash-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/>
+        </svg>
+        RecordCam
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
           </svg>
-          Administration
+          Vidéos reçues
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="btnLogout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Déconnexion
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenu principal -->
+    <div class="content">
+
+      <!-- En-tête de page -->
+      <div class="page-header">
+        <div>
+          <h2 class="page-title">Vidéos reçues</h2>
+          <p class="page-sub">Enregistrements envoyés par les utilisateurs</p>
         </div>
-        <div class="dash-actions">
+        <div class="header-actions">
+          <div class="live-badge" id="liveBadge">
+            <span class="live-dot"></span> En direct
+          </div>
           <button class="btn-refresh" id="btnRefresh">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
               <path d="M1 4v6h6"/><path d="M23 20v-6h-6"/>
               <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/>
             </svg>
             Actualiser
           </button>
-          <button class="btn-logout" id="btnLogout">Déconnexion</button>
-        </div>
-      </div>
-    </header>
-
-    <main class="dash-main">
-      <div class="dash-stats" id="dashStats">
-        <div class="stat-card">
-          <span class="stat-num" id="statTotal">0</span>
-          <span class="stat-lbl">Vidéos reçues</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-num" id="statSize">0 Mo</span>
-          <span class="stat-lbl">Stockage utilisé</span>
         </div>
       </div>
 
-      <div class="dash-empty" id="dashEmpty" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
-          <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-        </svg>
-        <p>Aucune vidéo reçue pour l'instant</p>
-        <span>Les enregistrements des utilisateurs apparaîtront ici</span>
+      <!-- Statistiques -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Vidéos reçues</div>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-value" id="statSize">0 Mo</div>
+            <div class="stat-label">Stockage utilisé</div>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-value" id="statDevices">—</div>
+            <div class="stat-label">Dernier appareil</div>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-value" id="statLast">—</div>
+            <div class="stat-label">Dernière réception</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Grille de vidéos -->
-      <div class="videos-grid" id="videosGrid"></div>
-    </main>
+      <!-- Zone principale : vidéos -->
+      <div class="videos-section">
 
+        <!-- État vide -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="56" height="56">
+              <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </div>
+          <h3>Aucune vidéo reçue</h3>
+          <p>Quand un utilisateur envoie un enregistrement,<br/>il apparaît ici automatiquement.</p>
+          <div class="empty-pulse">
+            <span class="pulse-dot"></span>
+            Surveillance active — actualisation toutes les 10 secondes
+          </div>
+        </div>
+
+        <!-- Grille de vidéos -->
+        <div class="videos-grid" id="videosGrid"></div>
+
+      </div>
+    </div>
   </div>
+
+  <!-- Notification toast -->
+  <div class="toast" id="toast" style="display:none"></div>
 
   <script src="admin.js"></script>
 </body>
