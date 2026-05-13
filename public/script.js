@@ -161,6 +161,7 @@ function stopRecording() {
   btnRecordLbl.textContent = 'Enregistrer';
   btnCam.disabled = false; btnMic.disabled = false;
   modeVideo.disabled = false; modeAudio.disabled = false;
+  if (state.camOn) checkMultipleCameras().then(has => { btnSwitch.style.display = has ? '' : 'none'; });
 }
 
 function saveRecording() {
@@ -270,13 +271,25 @@ function updateMicIcon() {
   btnMic.classList.toggle('active', state.micOn);
 }
 
+async function checkMultipleCameras() {
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const cameras = devices.filter(d => d.kind === 'videoinput');
+    return cameras.length >= 2;
+  } catch (_) { return false; }
+}
+
 btnCam.addEventListener('click', async () => {
   if (state.mode === 'audio') return;
   state.camOn = !state.camOn; updateCamIcon();
   if (state.camOn || state.micOn) {
     await startStream();
-    if (isMobile() && state.camOn) btnSwitch.style.display = '';
-    else btnSwitch.style.display = 'none';
+    if (state.camOn) {
+      const hasMultiple = await checkMultipleCameras();
+      btnSwitch.style.display = hasMultiple ? '' : 'none';
+    } else {
+      btnSwitch.style.display = 'none';
+    }
   } else { stopStream(); btnSwitch.style.display = 'none'; setStatus('Appuyez sur "Caméra" ou "Micro" pour démarrer'); }
 });
 
