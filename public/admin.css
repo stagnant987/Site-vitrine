@@ -92,18 +92,37 @@ html, body {
 
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-size: 0.78rem; font-weight: 600; color: var(--text-mid); letter-spacing: 0.04em; text-transform: uppercase; }
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 .field input {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
   color: var(--text);
-  padding: 14px 16px;
+  padding: 14px 48px 14px 16px;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
 }
 .field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(79,110,247,0.15); }
+
+.btn-eye {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.18s;
+}
+.btn-eye:hover { color: var(--text); }
 
 .btn-login {
   width: 100%;

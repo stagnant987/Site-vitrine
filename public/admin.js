@@ -1,5 +1,16 @@
 'use strict';
 
+// Bouton afficher/masquer mot de passe
+document.getElementById('btnTogglePass').addEventListener('click', () => {
+  const input   = document.getElementById('passwordInput');
+  const eyeShow = document.getElementById('eyeShow');
+  const eyeHide = document.getElementById('eyeHide');
+  const visible = input.type === 'text';
+  input.type        = visible ? 'password' : 'text';
+  eyeShow.style.display = visible ? '' : 'none';
+  eyeHide.style.display = visible ? 'none' : '';
+});
+
 const loginScreen   = document.getElementById('loginScreen');
 const app           = document.getElementById('app');
 const loginForm     = document.getElementById('loginForm');
